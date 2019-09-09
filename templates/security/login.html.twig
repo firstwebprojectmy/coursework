@@ -8,22 +8,35 @@
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
+    <div class="container">
+        <div class="row" style="height: 150px; "></div>
+        <H1 align="center">Sign in</H1>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form action="{{ path('login') }}" method="post">
+                    <label for="Email">Email:</label>
+                    <input type="Email" id="email" class="form-control" name="_email" value="{{ last_username }}"/>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="_password" class="form-control"/>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Remember me </label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12"><button type="submit" class="btn btn-primary" style = "width: 100%">Sign in</button></div>
+                    </div>
+                        <div class="row ml-auto">
+                            <label for="" style="font-size: 12px">Have no account?</label>
+                            <a href = "mysite/register" style="font-size: 12px" class="badge badge-light">Sign up</a>
+                        </div>
 
-<form action="{{ path('login') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password"/>
-
-    {#
-        If you want to control the URL the user
-        is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account"/>
-    #}
-
-    <button type="submit">login</button>
-</form>
 
 
 {% endblock %}
