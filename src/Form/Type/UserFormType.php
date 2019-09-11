@@ -20,7 +20,7 @@ class UserFormType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class)
-            ->add('secondName', DateType::class)
+            ->add('secondName', TextType::class)
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
             ->add('isBlogger',CheckboxType::class,[

@@ -14,11 +14,7 @@ abstract class AbstractEmail
 
     protected function sendEmail(User $user)
     {
-        $title = $this->getTitle();
-        $email = $user->getEmail();
-        $URL = $this->getURL($user);
-        $twigFile = $this->getTwigFile($user);
-        $this->mailer->send($this->createMessage($title, $email, $twigFile, $URL));
+        $this->mailer->send($this->createMessage($user));
     }
 
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
@@ -27,15 +23,17 @@ abstract class AbstractEmail
         $this->templating = $templating;
     }
 
-    private function createMessage(string $title, string $email, string $twigFile, string $URL):\Swift_Message
+    private function createMessage(User $user):\Swift_Message
     {
-        $message = (new \Swift_Message($title))
+        $message = (new \Swift_Message($this->getTitle()))
             ->setFrom('send@example.com')
-            ->setTo($email)
+            ->setTo($user->getEmail())
             ->setBody(
                 $this->templating->render(
-                    $twigFile,
-                    ['URL' => $URL]
+                    $this->getTwigFile($user), [
+                        'URL' => $this->getURL($user),
+                        'name' => $user->getFirstName()." ".$user->getSecondName()
+                    ]
                 ),
                 'text/html'
             )

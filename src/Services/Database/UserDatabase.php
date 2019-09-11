@@ -1,14 +1,14 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\Database;
 
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-class addToDatabase
+class UserDatabase
 {
     protected $entityManager;
 

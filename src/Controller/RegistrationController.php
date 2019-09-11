@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\UserFormType;
+use App\Services\Database\UserDatabase;
 use App\Services\Email\ConfirmeEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="registration")
      */
-    public function register(Request $request)
+    public function register(Request $request, UserDatabase $userDatabase)
     {
         $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
@@ -22,12 +23,15 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $user = $form->getData();
+            $userDatabase->addToDatabase($user);
+
+
         }
-        $this->get(ConfirmeEmail::class)->sendEmail();
+
 
 
         return $this->render('registration/index.html.twig', [
-            'controller_name' => 'RegistrationController',
+            'form' => $form->createView()
         ]);
     }
 }

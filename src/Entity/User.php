@@ -248,9 +248,9 @@ class User implements UserInterface
     public function setIsBlogger(bool $isBlogger): self
     {
         if ($isBlogger){
-            $this->setRoles("ROLE_BLOGGER");
+            $this->setRoles(array("ROLE_BLOGGER"));
         }else{
-            $this->setRoles("ROLE_USER");
+            $this->setRoles(array("ROLE_USER"));
         }
         $this->isBlogger = $isBlogger;
         return $this;
