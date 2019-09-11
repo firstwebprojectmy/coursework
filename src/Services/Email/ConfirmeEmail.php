@@ -5,6 +5,7 @@ namespace App\Services\Email;
 
 
 use App\Entity\User;
+use Symfony\Component\Templating\EngineInterface;
 
 class ConfirmeEmail extends AbstractEmail
 {
@@ -21,6 +22,10 @@ class ConfirmeEmail extends AbstractEmail
     protected function getURL(User $user): string
     {
         return 'http://corsework/confirme/'.$user->getConfirmeHash();
+    }
+    public function sendEmail(User $user)
+    {
+        parent::sendEmail($user);
     }
 
 }

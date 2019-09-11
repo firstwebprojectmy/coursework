@@ -5,7 +5,8 @@ namespace App\Services\Email;
 
 
 use App\Entity\User;
-use Symfony\Component\Templating\EngineInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+
 
 abstract class AbstractEmail
 {

@@ -9,22 +9,28 @@ use App\Services\Email\ConfirmeEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/registration", name="registration")
      */
-    public function register(Request $request, UserDatabase $userDatabase)
+    public function register(Request $request, UserDatabase $userDatabase,UserPasswordEncoderInterface $passwordEncoder, ConfirmeEmail $mailer)
     {
         $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $user = $form->getData();
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
             $userDatabase->addToDatabase($user);
-
+            $mailer->sendEmail($user);
 
         }
 

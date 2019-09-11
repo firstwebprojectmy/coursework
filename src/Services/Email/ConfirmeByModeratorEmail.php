@@ -22,5 +22,8 @@ class ConfirmeByModeratorEmail extends AbstractEmail
     {
         return 'http://corsework/bloggers/'.$user->getId();
     }
-
+    protected function sendEmail(User $user)
+    {
+        parent::sendEmail($user);
+    }
 }
