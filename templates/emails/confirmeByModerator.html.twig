@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ name }}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4 border border-dark">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Coursework</a>
+  </nav>
+<p>Hello {{ name }}</p>
+<p>A new blogger is registered in the system.</p>
+<p>Please log in and confirm its status</p>
+<a href="http://coursework.com/login"><button type="button" class="btn btn-success">log in</button></a>
+<p>Yours truly,
+The Coursework Team</p>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>
+
+{% endblock %}
