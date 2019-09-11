@@ -63,6 +63,21 @@ class User implements UserInterface
      */
     private $regisretedAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageURL;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isBlogger;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isComfirmedByModerator;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -209,6 +224,46 @@ class User implements UserInterface
     public function setRegisretedAt(\DateTimeInterface $regisretedAt): self
     {
         $this->regisretedAt = $regisretedAt;
+
+        return $this;
+    }
+
+    public function getImageURL(): ?string
+    {
+        return $this->imageURL;
+    }
+
+    public function setImageURL(?string $imageURL): self
+    {
+        $this->imageURL = $imageURL;
+
+        return $this;
+    }
+
+    public function getIsBlogger(): ?bool
+    {
+        return $this->isBlogger;
+    }
+
+    public function setIsBlogger(bool $isBlogger): self
+    {
+        if ($isBlogger){
+            $this->setRoles("ROLE_BLOGGER");
+        }else{
+            $this->setRoles("ROLE_USER");
+        }
+        $this->isBlogger = $isBlogger;
+        return $this;
+    }
+
+    public function getIsComfirmedByModerator(): ?bool
+    {
+        return $this->isComfirmedByModerator;
+    }
+
+    public function setIsComfirmedByModerator(?bool $isComfirmedByModerator): self
+    {
+        $this->isComfirmedByModerator = $isComfirmedByModerator;
 
         return $this;
     }
