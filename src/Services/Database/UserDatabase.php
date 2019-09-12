@@ -6,6 +6,7 @@ namespace App\Services\Database;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Null_;
 
 
 class UserDatabase
@@ -45,6 +46,22 @@ class UserDatabase
         $user->setRegisretedAt(new \DateTime());
     }
 
+    public function comfirmeUser(string $confirmeHash)
+    {
+        $repository = $this->entityManager->getRepository(User::class);
+        /**
+         * @var User $user
+         */
+        $user = $repository->findOneBy([
+            'confirmeHash' => $confirmeHash
+        ]);
+        if ($user == null){
+            throw new NullableUserException();
+        }
+        $user->setConfirmeHash($this->createConfirmeHash($user->getEmail()));
+        $user->setIsConfirmed(true);
+        $this->entityManager->flush();
+    }
 
 
 

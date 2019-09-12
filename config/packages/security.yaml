@@ -20,9 +20,17 @@ security:
               secret:   '%kernel.secret%'
               lifetime: 604800 # 1 week in seconds
               path:     /
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_USER }
     role_hierarchy:
       ROLE_BLOGGER: ROLE_USER
       ROLE_MODERATOR: ROLE_USER

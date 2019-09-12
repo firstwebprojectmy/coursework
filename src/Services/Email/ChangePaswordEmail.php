@@ -27,7 +27,7 @@ class ChangePaswordEmail extends AbstractEmail
 
     protected function getURL(User $user): string
     {
-        return 'http://corsework/changepassword/'.$user->getConfirmeHash();
+        return 'http://corsework.com/changepassword/'.$user->getConfirmeHash();
     }
 
 }
