@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Services\Database\UserDatabase;
+use App\Services\Exception\NullableUserException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,8 +24,13 @@ class ConfirmeController extends AbstractController
      */
     public function confirmeUser(UserDatabase $userDatabase, string $slug)
     {
-        $userDatabase->comfirmeUser($slug);
-        return $this->render('registration/successConfirmePassword.html.twig');
+        try{
+            $userDatabase->comfirmeUser($slug);
+        }catch (NullableUserException $thisException){}
+
+        return $this->render('registration/successConfirmePassword.html.twig',[
+            'error' => (string)$thisException
+        ]);
     }
 
 }

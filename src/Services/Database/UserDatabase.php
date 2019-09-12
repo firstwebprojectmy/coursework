@@ -5,6 +5,7 @@ namespace App\Services\Database;
 
 
 use App\Entity\User;
+use App\Services\Exception\NullableUserException;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Null_;
 
