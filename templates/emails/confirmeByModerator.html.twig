@@ -1,25 +1,58 @@
-{% extends 'base.html.twig' %}
-
 {% block title %}Hello {{ name }}{% endblock %}
-
+<head>
+    <style>
+        #grid {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 2vw;
+        }
+        .but {
+            color: #fff; /* цвет текста */
+            text-decoration: none; /* убирать подчёркивание у ссылок */
+            user-select: none; /* убирать выделение текста */
+            background: rgb(41, 128, 185); /* фон кнопки */
+            padding: .7em 1.5em; /* отступ от текста */
+            outline: none; /* убирать контур в Mozilla */
+            border-radius:10px;
+        }
+        .but:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
+        .but:active { background: rgb(152,15,0); } /* при нажатии */
+        .bord{
+            border:4px solid;
+            border-color:rgb(44, 62, 80);
+            width:300px;
+            font-family:Arial;
+        }
+        .header{
+            background:rgb(44, 62, 80);
+            height:30px;
+            font-size:18px;
+        }
+        .header>.logo{
+            color:rgb(255, 255, 255);
+        }
+    </style>
+</head>
 {% block body %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4 border border-dark">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Coursework</a>
-  </nav>
-<p>Hello {{ name }}</p>
-<p>A new blogger is registered in the system.</p>
-<p>Please log in and confirm its status</p>
-<a href="{{ URL }}"><button type="button" class="btn btn-success">log in</button></a>
-<p>Yours truly,
-The Coursework Team</p>
+    <div id="grid">
+        <div></div>
+        <div>
+            <div class="bord">
+                <div class="header">
+                    <div class="logo">Coursework.com</div>
+                </div>
+                <p>Hello {{ name }}</p>
+                <p>A new blogger is registered in the system.</p>
+                <p>Please log in and confirm its status</p>
+                <a href="{{ URL }}"><button type="button" class="btn btn-success">log in</button></a>
+                <p>Yours truly,
+                    The Coursework Team</p>
+            </div>
+        </div>
+        <div></div>
+
     </div>
-    <div class="col-sm-4"></div>
-  </div>
-</div>
 
 {% endblock %}

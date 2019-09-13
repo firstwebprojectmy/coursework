@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
+
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -13,25 +13,35 @@
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+<div class="container">
+    <div class="row" style = "height: 150px;"></div>
+    <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <h3 align = center>Please sign in</h3>
+        <form method="post">
+            <div class="form-group">
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+            </div>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="_remember_me">
+                <label class="form-check-label" for="exampleCheck1">Remember me</label>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                <button class="btn  btn-primary " type="submit" style = "width: 100%">Sign in</button>
+                </div>
+            </div>
+            <div class="row ml-auto">
+                <label for="" style="font-size: 12px">Have no account?</label>
+                <a href = "http://coursework.com/registration" style="font-size: 12px" class="badge badge-light">Sign up</a>
+            </div>
+    </form>
+    </div>
+    </div>
+    <div class="row col-sm-4"></div>
+    </div>
 {% endblock %}
