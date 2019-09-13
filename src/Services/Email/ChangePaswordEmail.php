@@ -5,12 +5,15 @@ namespace App\Services\Email;
 
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\Templating\EngineInterface;
 
 class ChangePaswordEmail extends AbstractEmail
 {
 
-    protected function sendEmail(User $user)
+
+
+    public function sendEmail(User $user)
     {
         parent::sendEmail($user);
     }

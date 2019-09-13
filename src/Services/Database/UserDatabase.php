@@ -5,18 +5,22 @@ namespace App\Services\Database;
 
 
 use App\Entity\User;
-use App\Services\Exception\NullableUserException;
+use App\Services\Exception\NullableConfirmeException;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping;
 use phpDocumentor\Reflection\Types\Null_;
+use phpDocumentor\Reflection\Types\Parent_;
 
 
 class UserDatabase
 {
     protected $entityManager;
+    protected $metadata;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->entityManager = $entityManager;
+        $this->entityManager = $em;
     }
 
     public function addToDatabase(User $user)
@@ -47,7 +51,7 @@ class UserDatabase
         $user->setRegisretedAt(new \DateTime());
     }
 
-    public function comfirmeUser(string $confirmeHash)
+    public function comfirmeUser(string $confirmeHash):User
     {
         $repository = $this->entityManager->getRepository(User::class);
         /**
@@ -57,13 +61,29 @@ class UserDatabase
             'confirmeHash' => $confirmeHash
         ]);
         if ($user == null){
-            throw new NullableUserException();
+            throw new NullableConfirmeException();
         }
         $user->setConfirmeHash($this->createConfirmeHash($user->getEmail()));
         $user->setIsConfirmed(true);
         $this->entityManager->flush();
+        return $user;
     }
 
-
+    public function isValidEmail(string $email):bool
+    {
+        $repository = $this->entityManager->getRepository(User::class);
+        $user = $repository->findOneBy([
+            'email' => $email
+        ]);
+        if (!$user){
+            return false;
+        }
+        return true;
+    }
+    public function changeUserPassword(User $user)
+    {
+        $user->setConfirmeHash($this->createConfirmeHash($user->getEmail()));
+        $this->addNewUser($user);
+    }
 
 }

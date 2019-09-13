@@ -6,11 +6,11 @@ namespace App\Services\Exception;
 
 use Throwable;
 
-class NullableUserException extends \Exception
+class NullableConfirmeException extends \Exception
 {
     public function __construct($message = "", $code = 500, Throwable $previous = null)
     {
-        $message = "Cannot find user for Your confirme code. Your account can be already confirme. You can try to login or check Your confirmeCode";
+        $message = "This link is not valid. Please check Your link";
         parent::__construct($message, $code, $previous);
     }
     public function __toString()

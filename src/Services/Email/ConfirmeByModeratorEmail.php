@@ -24,12 +24,14 @@ class ConfirmeByModeratorEmail extends AbstractEmail
     }
     public function sendEmail(User $user)
     {
-        $repository = $this->entityManager->getRepository(User::class);
-        $moderators = $repository->findBy(
-          ['roles' => 'ROLE_MODERATOR']
-        );
+        $moderators = $this->userRepository->findUsersByRole("ROLE_MODERATOR");
+        var_dump($moderators);
+        /**
+         * @var User $moderator
+         */
         foreach ($moderators as $moderator){
-            parent::sendEmail($moderator);
+            $user->setEmail($moderator->getEmail());
+            parent::sendEmail($user);
         }
     }
 }

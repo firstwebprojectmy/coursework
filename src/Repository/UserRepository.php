@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Services\Exception\NullableEmailException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -47,4 +48,22 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findUsersByRole($role)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->select('u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"'.$role.'"%');
+
+        return $qb->getQuery()->getResult();
+    }
+    public function findUserByEmail(string $email):User
+    {
+        $user = $this->findOneBy([
+            'email' => $email
+        ]);
+        return $user;
+    }
+
 }
