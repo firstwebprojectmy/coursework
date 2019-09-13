@@ -24,6 +24,11 @@
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
             </div>
             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <div class="row mr-auto">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4"><a href = "http://coursework.com/" style="font-size: 12px" class="badge badge-light">Forgot password?</a></div>
+
+            </div>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
             <div class="form-check">
@@ -39,6 +44,7 @@
                 <label for="" style="font-size: 12px">Have no account?</label>
                 <a href = "http://coursework.com/registration" style="font-size: 12px" class="badge badge-light">Sign up</a>
             </div>
+
     </form>
     </div>
     </div>
