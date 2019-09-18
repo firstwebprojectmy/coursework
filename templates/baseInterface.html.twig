@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} {% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">CourseWork</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" href="http://coursework.com/">All Posts</a>
+                <a class="nav-item nav-link" href="http://coursework.com/popular">Popular</a>
+                {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                    <a class="nav-item nav-link" href="#">Preferences</a>"
+                {% endif %}
+                {% if is_granted("ROLE_BLOGGER") %}
+                    <a class="nav-item nav-link" href="#">My Posts</a>
+                    <a class="nav-item nav-link" href="#">Create New Post</a>
+                {% endif %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        Menu
+                    </button>
+                    <div class="dropdown-menu">
+                        {% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                            <a class="dropdown-item" href="http://coursework.com/login">Login</a>
+                            <a class="dropdown-item" href="http://coursework.com/registration">Register</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_USER') %}
+                            <a class="dropdown-item" href="#">My Profile</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="#">Administration</a>"
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <div class="card" style="width:100%;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Название карточки</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 100%;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Название карточки</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 100%;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Название карточки</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 100%;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Название карточки</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 100%;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Название карточки</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 100%;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Название карточки</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 100%;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Название карточки</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+
+    </div>
+
+{% endblock %}
