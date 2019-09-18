@@ -20,12 +20,11 @@ class ConfirmeByModeratorEmail extends AbstractEmail
 
     protected function getURL(User $user): string
     {
-        return 'http://corsework.com/bloggers/'.$user->getId();
+        return 'http://coursework.com/bloggers/'.$user->getId();
     }
     public function sendEmail(User $user)
     {
         $moderators = $this->userRepository->findUsersByRole("ROLE_MODERATOR");
-        var_dump($moderators);
         /**
          * @var User $moderator
          */

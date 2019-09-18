@@ -16,7 +16,9 @@
 
     </head>
     <body>
+    {{ renderer.render(menu) | raw }}
         {% block body %}
+
         {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

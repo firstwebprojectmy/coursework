@@ -108,6 +108,6 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        return $this->redirect('app_login');
+        return $this->redirectToRoute('/login');
     }
 }

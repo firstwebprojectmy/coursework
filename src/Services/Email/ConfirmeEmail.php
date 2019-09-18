@@ -21,7 +21,7 @@ class ConfirmeEmail extends AbstractEmail
 
     protected function getURL(User $user): string
     {
-        return 'http://corsework.com/registration/confirme/'.$user->getConfirmeHash();
+        return 'http://coursework.com/registration/confirme/'.$user->getConfirmeHash();
     }
     public function sendEmail(User $user)
     {
