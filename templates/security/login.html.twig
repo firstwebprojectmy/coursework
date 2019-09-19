@@ -1,12 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseInterface.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-
-
-
-
+    {{ parent() }}
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -29,7 +26,7 @@
             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <div class="row mr-auto">
                 <div class="col-sm-8"></div>
-                <div class="col-sm-4"><a href = "http://coursework.com/" style="font-size: 12px" class="badge badge-light">Forgot password?</a></div>
+                <div class="col-sm-4"><a href = "/changePassword" style="font-size: 12px" class="badge badge-light">Forgot password?</a></div>
 
             </div>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

@@ -67,11 +67,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $credentials['email'],
-            'isConfirmed' => 1
+            'isConfirmed' => 1,
+            'isBanned' => 0
         ]);
 
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found or You are not confirme Your email');
         }
 
@@ -90,7 +90,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        return new \Symfony\Component\HttpFoundation\Response('OK');
+        return new RedirectResponse($this->urlGenerator->generate('home_page'));
     }
 
     protected function getLoginUrl()

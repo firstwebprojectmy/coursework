@@ -23,9 +23,9 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //    $this->redirectToRoute('target_path');
-        // }
+         if ($this->getUser()) {
+            $this->redirectToRoute('home_page');
+         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -37,7 +37,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/changePassword/", name="app_change_password")
+     * @Route("/changePassword", name="app_change_password")
      */
 
     public function changePassword(Request $request, ChangePaswordEmail $mailer, UserDatabase $database, UserRepository $repository)
@@ -66,7 +66,7 @@ class SecurityController extends AbstractController
         ]);
     }
     /**
-     * @Route("/changePassword/{slug}", name="app_changing_password")
+     * @Route("/changepassword/{slug}", name="app_changing_password")
      */
     public function changingPassword(Request $request, $slug, UserPasswordEncoderInterface $passwordEncoder, UserDatabase $userDatabase)
     {

@@ -1,0 +1,22 @@
+{% extends 'baseInterface.html.twig' %}
+
+{% block title %}Profile {% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {{ form(form) }}
+
+    {% if isSaved %}
+    <div class="alert alert-success" role="alert">
+        OK
+    </div>
+    {% endif %}
+
+
+    {% for userPreference in userPreferences %}
+        <div>
+            {{ userPreference.getfirstName }} - {{ userPreference.getsecondName }}
+        </div>
+    {% endfor %}
+
+{% endblock %}

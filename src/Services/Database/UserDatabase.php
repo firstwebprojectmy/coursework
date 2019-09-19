@@ -7,11 +7,6 @@ namespace App\Services\Database;
 use App\Entity\User;
 use App\Services\Exception\NullableConfirmeException;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping;
-use phpDocumentor\Reflection\Types\Null_;
-use phpDocumentor\Reflection\Types\Parent_;
-
 
 class UserDatabase
 {
@@ -26,6 +21,11 @@ class UserDatabase
     public function addToDatabase(User $user)
     {
         $this->initUser($user);
+        $this->addNewUser($user);
+    }
+
+    public function updateUser(User $user)
+    {
         $this->addNewUser($user);
     }
 

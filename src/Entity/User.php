@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -79,6 +81,27 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isComfirmedByModerator;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $shortInformation;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Preferences", mappedBy="user")
+     */
+    private $preferences;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Preferences", mappedBy="blogger")
+     */
+    private $bloggerpreferences;
+
+    public function __construct()
+    {
+        $this->preferences = new ArrayCollection();
+        $this->bloggerpreferences = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -266,6 +289,80 @@ class User implements UserInterface
     public function setIsComfirmedByModerator(?bool $isComfirmedByModerator): self
     {
         $this->isComfirmedByModerator = $isComfirmedByModerator;
+
+        return $this;
+    }
+
+    public function getShortInformation(): ?string
+    {
+        return $this->shortInformation;
+    }
+
+    public function setShortInformation(?string $shortInformation): self
+    {
+        $this->shortInformation = $shortInformation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Preferences[]
+     */
+    public function getPreferences(): Collection
+    {
+        return $this->preferences;
+    }
+
+    public function addPreference(Preferences $preference): self
+    {
+        if (!$this->preferences->contains($preference)) {
+            $this->preferences[] = $preference;
+            $preference->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePreference(Preferences $preference): self
+    {
+        if ($this->preferences->contains($preference)) {
+            $this->preferences->removeElement($preference);
+            // set the owning side to null (unless already changed)
+            if ($preference->getUser() === $this) {
+                $preference->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Preferences[]
+     */
+    public function getBloggerpreferences(): Collection
+    {
+        return $this->bloggerpreferences;
+    }
+
+    public function addBloggerpreference(Preferences $bloggerpreference): self
+    {
+        if (!$this->bloggerpreferences->contains($bloggerpreference)) {
+            $this->bloggerpreferences[] = $bloggerpreference;
+            $bloggerpreference->setBlogger($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBloggerpreference(Preferences $bloggerpreference): self
+    {
+        if ($this->bloggerpreferences->contains($bloggerpreference)) {
+            $this->bloggerpreferences->removeElement($bloggerpreference);
+            // set the owning side to null (unless already changed)
+            if ($bloggerpreference->getBlogger() === $this) {
+                $bloggerpreference->setBlogger(null);
+            }
+        }
 
         return $this;
     }
