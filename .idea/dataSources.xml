@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+<<<<<<< HEAD
     <data-source source="LOCAL" name="course_DB@localhost" uuid="a56b1ae0-1c57-4961-b958-999abe060f34">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/course_DB</jdbc-url>
+=======
+    <data-source source="LOCAL" name="course_db@localhost" uuid="676ac171-e219-4b8b-9a0d-1e7c6410e9ac">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/course_db</jdbc-url>
+>>>>>>> c1720eff74739ea8aa34dafe62fc197f42df78a4
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="CONVERT_TO_NULL" />
@@ -13,6 +21,10 @@
         <property name="characterEncoding" value="utf8" />
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
+<<<<<<< HEAD
+=======
+        <property name="serverTimezone" value="UTC" />
+>>>>>>> c1720eff74739ea8aa34dafe62fc197f42df78a4
       </driver-properties>
     </data-source>
   </component>
