@@ -42,5 +42,16 @@ class PreferenciesDatabase
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
+    public function deletePrefencies(User $user, User $blogger)
+    {
+        $repository = $this->entityManager->getRepository(User::class);
+        $preference = $repository->findBy(
+            ['user' => $user],
+            ['blogger' => $blogger]
+        );
+        $this->entityManager->remove($preference);
+        $this->entityManager->flush();
+
+    }
 
 }

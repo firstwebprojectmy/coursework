@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +47,16 @@ class Post
      * @ORM\Column(type="boolean")
      */
     private $isBanned;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post")
+     */
+    private $postLikes;
+
+    public function __construct()
+    {
+        $this->postLikes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +131,37 @@ class Post
     public function setIsBanned(bool $isBanned): self
     {
         $this->isBanned = $isBanned;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getPostLikes(): Collection
+    {
+        return $this->postLikes;
+    }
+
+    public function addPostLike(Like $postLike): self
+    {
+        if (!$this->postLikes->contains($postLike)) {
+            $this->postLikes[] = $postLike;
+            $postLike->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostLike(Like $postLike): self
+    {
+        if ($this->postLikes->contains($postLike)) {
+            $this->postLikes->removeElement($postLike);
+            // set the owning side to null (unless already changed)
+            if ($postLike->getPost() === $this) {
+                $postLike->setPost(null);
+            }
+        }
 
         return $this;
     }
