@@ -80,10 +80,22 @@ class UserDatabase
         }
         return true;
     }
+
     public function changeUserPassword(User $user)
     {
         $user->setConfirmeHash($this->createConfirmeHash($user->getEmail()));
         $this->addNewUser($user);
     }
+
+    public function getBlogger(int $bloggerID):User
+    {
+        $repository = $this->entityManager->getRepository(User::class);
+        /**
+         * @var User $blogger
+         */
+        $blogger = $repository->find($bloggerID);
+        return $blogger;
+    }
+
 
 }
