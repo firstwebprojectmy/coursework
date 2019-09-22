@@ -47,5 +47,12 @@ class LikeDatabase
         }
     }
 
+    public function isUserLike(User $user, Post $post):bool
+    {
+        $repository = $this->entityManager->getRepository(Like::class);
+
+        return true;
+    }
+
 
 }

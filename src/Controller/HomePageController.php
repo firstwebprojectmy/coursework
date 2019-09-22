@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\Type\MyProfileType;
 use App\Form\Type\UserFormType;
 use App\Entity\User;
+use App\Services\Database\LikeDatabase;
 use App\Services\Database\PostDatabase;
 use App\Services\Database\PreferenciesDatabase;
 use App\Services\Database\UserDatabase;
@@ -106,26 +107,36 @@ class HomePageController extends Controller
     /**
      * @Route("/blogger/{bloggerID}", name="app_blogger")
      */
-    public function bloggerProfile(UserDatabase $userDatabase, PostDatabase $postDatabase, string $bloggerID)
+    public function bloggerProfile(Request $request,UserDatabase $userDatabase, PostDatabase $postDatabase, string $bloggerID)
     {
         $blogger = $userDatabase->getBlogger($bloggerID);
         $bloggerPosts = $postDatabase->getUserPost($blogger);
         return $this->render('home_page/bloggerprofile.html.twig',[
            'blogger' => $blogger,
-           'posts' => $bloggerPosts
+            'posts' => $this->get('knp_paginator')->paginate(
+                $bloggerPosts, /* query NOT result */
+                $request->query->getInt('page', 1), 10),
+            'title' => 'Blogger page',
         ]);
     }
 
 
     /**
-     * @Route("/post")
+     * @Route("/post/{postID}")
      */
-    public function Post()
+    public function Post(Request $request, int $postID, PostDatabase $postDatabase,  LikeDatabase $likeDatabase)
     {
+        $post = $postDatabase->findPostByID($postID);
+        $likes = $likeDatabase->getNumberOfLikes($post);
+        $userLike = false;
+        if ($this->getUser()){
+            $likeDatabase->
+        }
+
+
         return $this->render('home_page/Post.html.twig',[
-            'title'=>"Post",
-            'post'=>['title'=>'hello','text'=>'erfergfergfrkfhererfergfergfrkfhererfergfergfrkfhererfergfergfrkfhererfergfergfrkfhererfergfergfrkfhererfergfergfrkfhererfergfergfrkfhererfergfergfrkfhererfergfergfrkfher','image'=>'https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg','like'=>170,'isLiked'=>true,'data'=>'22.06.2001'],
-            'autor'=>['image'=>'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500','name'=>'kostya zhamoydin'],
-            'follower'=>false]);
+           'post' => $post
+
+        ]);
     }
 }
