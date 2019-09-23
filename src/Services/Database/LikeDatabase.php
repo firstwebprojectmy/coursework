@@ -22,7 +22,11 @@ class LikeDatabase
         if ($post == null){
             return 0;
         }
-        return count($post->getPostLikes());
+        //echo 1;
+        return 0;
+        //$repository = $this->entityManager->getRepository(Like::class);
+
+        //return count($likes);
     }
 
     public function addNewUserLike(User $user, Post $post)
@@ -49,8 +53,14 @@ class LikeDatabase
 
     public function isUserLike(User $user, Post $post):bool
     {
-        $repository = $this->entityManager->getRepository(Like::class);
-
+        /*$repository = $this->entityManager->getRepository(Like::class);
+        $like = $repository->findBy(
+            ['user' => $user],
+            ['post' => $post]
+        );
+        if (!$like){
+            return false;
+        }*/
         return true;
     }
 

@@ -9,6 +9,7 @@ use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Reference;
 
 class PreferenciesDatabase
 {
@@ -51,7 +52,18 @@ class PreferenciesDatabase
         );
         $this->entityManager->remove($preference);
         $this->entityManager->flush();
-
     }
 
+    public function isUserPreference(User $user, User $blogger):bool
+    {
+        /*$repository = $this->entityManager->getRepository(Reference::class);
+        $preference = $repository->findBy(
+            ['user' => $user],
+            ['blogger' => $blogger]
+        );
+        if ($preference){
+            return true;
+        }*/
+        return false;
+    }
 }

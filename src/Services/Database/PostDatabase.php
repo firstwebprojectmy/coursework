@@ -51,11 +51,29 @@ class PostDatabase
 
     public function findPostByID(int $postID):Post
     {
+
         $repository = $this->entityManager->getRepository(Post::class);
         /**
          * @var Post $post
          */
         $post = $repository->find($postID);
+        /**
+         * @var Post $post
+         */
+        //$post = $repository->find($postID);
+        /*$post = $repository->findBy(
+            ['id' => $postID]
+        )[0];*/
         return $post;
+    }
+
+    public function addNewPost(User $user, Post $post)
+    {
+        $repository = $this->entityManager->getRepository(Post::class);
+        $post->setIsBanned(false);
+        $post->setCreatedAt(new \DateTime());
+        $post->setUser($user);
+        $this->entityManager->persist($post);
+        $this->entityManager->flush();
     }
 }

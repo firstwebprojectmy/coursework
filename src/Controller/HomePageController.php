@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
+use App\Form\Type\CreatePostType;
 use App\Form\Type\MyProfileType;
 use App\Form\Type\UserFormType;
 use App\Entity\User;
@@ -24,32 +26,10 @@ class HomePageController extends Controller
      */
     public function index(Request $request)
     {
-        $query = [
-            ['id'=>1,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>2,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>3,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>false],
-            ['id'=>4,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>false],
-            ['id'=>5,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>6,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>false],
-            ['id'=>7,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>8,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>false],
-            ['id'=>9,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>10,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>false],
-            ['id'=>11,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>12,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>false],
-            ['id'=>13,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>14,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-            ['id'=>15,'title'=>'first post','image'=>'','text'=>'jksvjgvhgjhvgdkhvgggfuygregrfgerjhfgerjkhgfrej','like'=>140,'data'=>'12.03.2001','isLiked'=>true],
-        ];
-        // $em = $this->get('doctrine.orm.entity_manager');
-        // $dql = "SELECT a FROM AcmeMainBundle:Article a";
-        // $query = $em->createQuery($dql);// переменная должна содержать массив массивов с постами
+
         return $this->render('home_page/index.html.twig', [
             'controller_name' => 'HomePageController',
             'title' => 'All posts',
-            'posts' => $this->get('knp_paginator')->paginate(
-                $query, /* query NOT result */
-                $request->query->getInt('page', 1), 10)
         ]);
     }
 
@@ -124,19 +104,53 @@ class HomePageController extends Controller
     /**
      * @Route("/post/{postID}")
      */
-    public function Post(Request $request, int $postID, PostDatabase $postDatabase,  LikeDatabase $likeDatabase)
+    public function Post(Request $request, int $postID, PostDatabase $postDatabase,  LikeDatabase $likeDatabase, PreferenciesDatabase $preferenciesDatabase)
     {
         $post = $postDatabase->findPostByID($postID);
         $likes = $likeDatabase->getNumberOfLikes($post);
+        echo 1;
         $userLike = false;
+        $userPreference = false;
         if ($this->getUser()){
-            $likeDatabase->
+            $userLike = $likeDatabase->isUserLike($this->getUser(), $post);
+            $userPreference = $preferenciesDatabase->isUserPreference($this->getUser(), $post->getUser());
         }
-
-
         return $this->render('home_page/Post.html.twig',[
-           'post' => $post
-
+            'title'=>'Post',
+            'post' => $post,
+            'likes' => $likes,
+            'userLike' => $userLike,
+            'autor' => $post->getUser(),
+            'follow' => $userPreference,
         ]);
     }
+
+    /**
+     * @Route("/createPost")
+     */
+    public function createPost(Request $request, PostDatabase $postDatabase)
+    {
+        $post = new Post();
+        $form = $this->createForm(CreatePostType::class, $post);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $postDatabase->addNewPost($this->getUser(), $post);
+            return $this->redirectToRoute("home_page");
+        }
+
+        return $this->render("home_page/createpost.html.twig",[
+            'title' => 'Create Post!',
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/myPosts")
+     */
+    /*public function myPost(PostDatabase $postDatabase)
+    {
+
+    } */
+
+
 }
